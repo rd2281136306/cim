@@ -1,12 +1,15 @@
 package com.crossoverjie.cim.client.handle;
 
+import com.crossoverjie.cim.client.service.EchoService;
 import com.crossoverjie.cim.client.service.ShutDownMsg;
+import com.crossoverjie.cim.client.service.impl.EchoServiceImpl;
 import com.crossoverjie.cim.client.thread.ReConnectJob;
 import com.crossoverjie.cim.client.util.SpringBeanFactory;
 import com.crossoverjie.cim.common.constant.Constants;
 import com.crossoverjie.cim.common.protocol.CIMRequestProto;
 import com.crossoverjie.cim.common.protocol.CIMResponseProto;
 import com.crossoverjie.cim.common.util.NettyAttrUtil;
+import com.vdurmont.emoji.EmojiParser;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -40,6 +43,8 @@ public class CIMClientHandle extends SimpleChannelInboundHandler<CIMResponseProt
 
     private ShutDownMsg shutDownMsg ;
 
+    private EchoService echoService ;
+
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
@@ -67,7 +72,6 @@ public class CIMClientHandle extends SimpleChannelInboundHandler<CIMResponseProt
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
         //客户端和服务端建立连接时调用
         LOGGER.info("cim server connect success!");
     }
@@ -94,6 +98,10 @@ public class CIMClientHandle extends SimpleChannelInboundHandler<CIMResponseProt
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CIMResponseProto.CIMResProtocol msg) throws Exception {
+        if (echoService == null){
+            echoService = SpringBeanFactory.getBean(EchoServiceImpl.class) ;
+        }
+
 
         //心跳更新时间
         if (msg.getType() == Constants.CommandType.PING){
@@ -105,7 +113,9 @@ public class CIMClientHandle extends SimpleChannelInboundHandler<CIMResponseProt
             //回调消息
             callBackMsg(msg.getResMsg());
 
-            LOGGER.info(msg.getResMsg());
+            //将消息中的 emoji 表情格式化为 Unicode 编码以便在终端可以显示
+            String response = EmojiParser.parseToUnicode(msg.getResMsg());
+            echoService.echo(response);
         }
 
 

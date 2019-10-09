@@ -19,7 +19,9 @@ public enum SystemCommandEnum {
              AI(":ai        ","开启 AI 模式","OpenAIModelCommand"),
             QAI(":qai       ","关闭 AI 模式","CloseAIModelCommand"),
          PREFIX(":pu        ","模糊匹配用户","PrefixSearchCommand"),
-           INFO(":info      ","获取客户端信息","EchoInfoCommand")
+          EMOJI(":emoji     ","emoji 表情列表","EmojiCommand"),
+           INFO(":info      ","获取客户端信息","EchoInfoCommand"),
+      DELAY_MSG(":delay     ","delay message, :delay [msg] [delayTime]","DelayMsgCommand")
 
     ;
 

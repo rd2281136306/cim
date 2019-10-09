@@ -26,7 +26,7 @@
 - 适用于 `APP` 的消息推送中间件。
 - `IOT` 海量连接场景中的消息透传中间件。
 
-> 我有在公网部署了一套演示环境，想要体验的可以[联系我](#联系作者)加入内测群获取账号。
+> 在使用或开发过程中有任何疑问都可[联系我](#联系作者)。
 
 ## 视频演示
 
@@ -50,8 +50,9 @@
 * [x] 路由(`cim-forward-route`)服务自身是无状态，可用 `Nginx` 代理支持高可用。
 * [x] 服务端自动剔除离线客户端。
 * [x] 客户端自动重连。
+* [x] [延时消息](#延时消息)
 * [ ] 分组群聊。
-* [ ] Android SDK。
+* [ ] SDK 开发包。
 * [ ] 离线消息。
 * [ ] 协议支持消息加密。
 * [ ] 更多的客户端路由策略。
@@ -176,11 +177,13 @@ java -jar cim-client-1.0.0-SNAPSHOT.jar --server.port=8084 --cim.user.id=上方�
 | `:q!` | 退出客户端| 
 | `:olu` | 获取所有在线用户信息 | 
 | `:all` | 获取所有命令 | 
-| `:q` | 【:q 关键字】查询聊天记录 | 
+| `:q [option]` | 【:q 关键字】查询聊天记录 | 
 | `:ai` | 开启 AI 模式 | 
 | `:qai` | 关闭 AI 模式 | 
 | `:pu` | 模糊匹配用户 | 
 | `:info` | 获取客户端信息 | 
+| `:emoji [option]` | 查询表情包 [option:页码] | 
+| `:delay [msg] [delayTime]` | 发送延时消息 | 
 | `:` | 更多命令正在开发中。。 | 
 
 ![](https://ws3.sinaimg.cn/large/006tNbRwly1fylh7bdlo6g30go01shdt.gif)
@@ -211,9 +214,9 @@ java -jar cim-client-1.0.0-SNAPSHOT.jar --server.port=8084 --cim.user.id=上方�
 
 > 该功能主要用于在移动端中的输入框中搜索用户。 
 
-## 群聊/私聊
+### 群聊/私聊
 
-### 群聊
+#### 群聊
 
 ![](https://ws1.sinaimg.cn/large/006tNbRwly1fyli54e8e1j31t0056x11.jpg)
 ![](https://ws3.sinaimg.cn/large/006tNbRwly1fyli5yyspmj31im06atb8.jpg)
@@ -221,7 +224,7 @@ java -jar cim-client-1.0.0-SNAPSHOT.jar --server.port=8084 --cim.user.id=上方�
 
 群聊只需要在控制台里输入消息回车后即可发送，同时所有在线客户端都可收到消息。
 
-### 私聊
+#### 私聊
 
 私聊首先需要知道对方的 `userID` 才能进行。
 
@@ -241,8 +244,22 @@ java -jar cim-client-1.0.0-SNAPSHOT.jar --server.port=8084 --cim.user.id=上方�
 
 
 
+### emoji 表情支持
 
+使用命令 `:emoji 1` 查询出所有表情列表，使用表情别名即可发送表情。
 
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j910cqrzj30dn05qjw9.jpg)
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g6j99hazg6j30ax03hq35.jpg)
+ 
+### 延时消息
+
+发送 10s 的延时消息：
+
+```shell
+:delay delayMsg 10
+```
+
+![](https://tva1.sinaimg.cn/large/006y8mN6ly1g7brppmokqg30gn07gafj.gif)
 
 ## 联系作者
 - [crossoverJie@gmail.com](mailto:crossoverJie@gmail.com)
@@ -251,11 +268,4 @@ java -jar cim-client-1.0.0-SNAPSHOT.jar --server.port=8084 --cim.user.id=上方�
 ![](https://ws1.sinaimg.cn/large/006tKfTcly1ftmfdo6mhmj30760760t7.jpg)
 
 
-### Code Visualization:
-
-Here is a cool visualization of the code evolution
-
- [![Watch the video](https://img.youtube.com/vi/NhV_brPIG74/0.jpg)](https://www.youtube.com/watch?v=NhV_brPIG74)
-
- [https://www.youtube.com/watch?v=NhV_brPIG74](https://www.youtube.com/watch?v=NhV_brPIG74)
 
